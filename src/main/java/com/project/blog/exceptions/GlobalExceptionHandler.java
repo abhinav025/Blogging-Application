@@ -9,14 +9,14 @@ import com.project.blog.payloads.ApiResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	
+
 	@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<ApiResponse> resourseNotFoundExceptionHandler(ResourceNotFoundException ex){
+	public ResponseEntity<ApiResponse> resourseNotFoundExceptionHandler(ResourceNotFoundException ex) {
 		String message = ex.getMessage();
-		ApiResponse apiResponse = new ApiResponse(message,false);
-		
-		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
-		
+		ApiResponse apiResponse = new ApiResponse(message, false);
+
+		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
+
 	}
 
 }
