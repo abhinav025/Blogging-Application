@@ -22,7 +22,12 @@ public interface PostService {
 	//-- get single post
 	Post getPostById(Integer postId);
 	
-	//-- get all post by id
+	//-- get all posts by Category
+	List<Post> getPostsByCategory(Integer categoryId);
+	
+	//-- get all posts by User
+	List<Post> getPostsByUser(Integer userId);
+	
 	
 
 }
