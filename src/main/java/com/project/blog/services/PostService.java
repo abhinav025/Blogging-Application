@@ -28,6 +28,7 @@ public interface PostService {
 	//-- get all posts by User
 	List<Post> getPostsByUser(Integer userId);
 	
-	
+	//-- search Posts
+	List<Post> searchPosts(String keyword);
 
 }
