@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.blog.payloads.PostDto;
 import com.project.blog.services.PostService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/")
@@ -45,6 +47,20 @@ public class PostController {
 		List<PostDto> posts = this.postService.getPostsByCategory(categoryId);
 		
 		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+	}
+	
+	//-- get all post
+	@GetMapping("/posts")
+	public ResponseEntity<List<PostDto>> getAllPost(){
+		List<PostDto> allPost = this.postService.getAllPost();
+		return new ResponseEntity<List<PostDto>>(allPost,HttpStatus.OK);
+	}
+	
+	//-- get post details by ID
+	@GetMapping("/posts/{postId}")
+	public ResponseEntity<PostDto> singlePostById(@PathVariable Integer postId){
+		 PostDto postById = this.postService.getPostById(postId);
+		 return new ResponseEntity<PostDto>(postById,HttpStatus.OK);
 	}
 	
 
