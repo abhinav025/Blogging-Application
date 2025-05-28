@@ -17,10 +17,10 @@ public interface PostService {
 	void deletePost(Integer postId);
 	
 	//-- get all
-	List<Post> getAllPost();
+	List<PostDto> getAllPost();
 	
 	//-- get single post
-	Post getPostById(Integer postId);
+	PostDto getPostById(Integer postId);
 	
 	//-- get all posts by Category
 	List<PostDto> getPostsByCategory(Integer categoryId);
