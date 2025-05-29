@@ -63,5 +63,7 @@ public class PostController {
 		 return new ResponseEntity<PostDto>(postById,HttpStatus.OK);
 	}
 	
+	//-- delete post
+	
 
 }
