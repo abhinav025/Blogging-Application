@@ -138,7 +138,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> searchPosts(String keyword) {
+	public List<PostDto> searchPosts(String keyword) {
 		// TODO Auto-generated method stub
 		return null;
 	}

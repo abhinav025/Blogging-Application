@@ -86,5 +86,8 @@ public class PostController {
 		PostDto updatePost = this.postService.updatePost(postDto, postId);
 		return new ResponseEntity<PostDto>(updatePost,HttpStatus.OK);
 	}
+	
+	//-- searching method
+	
 
 }
