@@ -139,7 +139,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDto> searchPosts(String keyword) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
