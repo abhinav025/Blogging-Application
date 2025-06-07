@@ -3,6 +3,7 @@ package com.project.blog.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.blog.config.AppConstants;
 import com.project.blog.entities.Post;
 import com.project.blog.payloads.ApiResponse;
 import com.project.blog.payloads.PostDto;
 import com.project.blog.payloads.PostResponse;
+import com.project.blog.services.FileService;
 import com.project.blog.services.PostService;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,6 +32,12 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private FileService fileService;
+	
+	@Value("${project.image}")
+	private String path;
 	
 	//-- create
 	@PostMapping("/user/{userId}/category/{categoryId}/posts")
@@ -93,6 +102,14 @@ public class PostController {
 	public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keyword){
 		List<PostDto> results = this.postService.searchPosts(keyword);
 		return new ResponseEntity<List<PostDto>> (results, HttpStatus.OK);
+	}
+	
+	//-- post image upload
+	@PostMapping("/post/image/upload/{postId}")
+	public ResponseEntity<ImageResponse> uploadImage(@RequestParam("image") MultipartFile image){
+		
+		String fileName = this.fileService.uploadImage(path, image);
+		
 	}
 
 }
