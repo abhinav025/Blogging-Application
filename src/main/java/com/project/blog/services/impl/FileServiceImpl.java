@@ -30,7 +30,8 @@ public class FileServiceImpl implements FileService {
 		
 		
 		// -- Full path
-		String filePath = path + File.pathSeparator + fileName1;
+//		String filePath = path + File.pathSeparator + fileName1;
+		String filePath = path + File.separator + fileName1;
 		
 		
 		
@@ -50,12 +51,16 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public InputStream getResource(String path, String fileName) throws FileNotFoundException {
 		
-		String fullPath = path+File.separator+fileName;
-		InputStream is = new FileInputStream(fullPath);
+		String fullPath = path + File.separator + fileName;
+	    File file = new File(fullPath);
+	    
+	    if (!file.exists()) {
+	        throw new FileNotFoundException("File not found at path: " + fullPath);
+	    }
+
+	 // db logic to return input stream
+	    return new FileInputStream(file);
 		
-		// db logic to return input stream
-		
-		return is;
 	}
 
 }
