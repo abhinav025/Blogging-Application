@@ -4,10 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.project.blog.entities.Category;
-import com.project.blog.entities.Comment;
-import com.project.blog.entities.User;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +27,7 @@ public class PostDto {
 	
 	private UserDto user;
 	
-	private Set<Comment> comments = new HashSet<>();
+	private Set<CommentDto> comments = new HashSet<>();
 	
 	
 

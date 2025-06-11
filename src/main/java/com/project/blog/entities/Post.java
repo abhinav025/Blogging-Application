@@ -47,6 +47,6 @@ public class Post {
 	private User user;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-	private Set<Comment> coments = new HashSet<>();
+	private Set<Comment> comments = new HashSet<>();
 
 }
