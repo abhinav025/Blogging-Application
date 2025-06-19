@@ -3,7 +3,11 @@ package com.project.blog.security;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -40,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		
 		String token = null;
 		
-		if(request!=null && requestToken.startsWith("Bearer")) {
+		if(requestToken!=null && requestToken.startsWith("Bearer")) {
 			
 			token = requestToken.substring(7);
 			
@@ -62,8 +66,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			System.out.println("JWT token does not began with Bearer");
 		}
 		
+		// once we get the token, now we have to validate
+		if(username!=null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+			
+			if(this.jwtTokenHelper.validateToken(token, userDetails)) {
+				
+				//now we have to do authentication
+				
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				
+				SecurityContextHolder.getContext().setAuthentication(null);
+				
+			}else {
+				System.out.println("Invalid JWT token");
+			}
+			
+			
+		}
+		else {
+			System.out.println("username is null or context is not null");
+			
+		}
 		
-		
+		filterChain.doFilter(request, response);
 		
 	}
 
