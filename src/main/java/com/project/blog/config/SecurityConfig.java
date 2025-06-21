@@ -35,18 +35,22 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFileterChain(HttpSecurity http)throws Exception{
 		
 		http
-		.csrf(csrf -> csrf.disable())
-		.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-		.exceptionHandling(ex -> ex
-				.authenticationEntryPoint(this.jwtAuthenticationEntryPoint))
-		.sessionManagement(sess -> sess
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-		
-		http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		
-		return http.build();
-		
-	}
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/v1/auth/login").permitAll()
+            .anyRequest().authenticated()
+        )
+        .exceptionHandling(ex -> ex
+            .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
+        )
+        .sessionManagement(sess -> sess
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
+
+    http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+}
 	
 	public void configure(AuthenticationManagerBuilder auth)throws Exception{
 		auth.userDetailsService(coustomUserDetailService).passwordEncoder(passwordEncoder());
