@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,7 +31,7 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 	
 	@PostMapping("/login")
-	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request )
+	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request ) throws Exception
 	{
 		this.authenticate(request.getUsername(),request.getPassword());
 		
@@ -43,10 +44,18 @@ public class AuthController {
 		return new ResponseEntity<JwtAuthResponse>(response,HttpStatus.OK);
 	}
 
-	private void authenticate(String username, String password) {
+	private void authenticate(String username, String password) throws Exception {
 		
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-		this.authenticationManager.authenticate(authenticationToken);
+		
+		try {
+			this.authenticationManager.authenticate(authenticationToken);
+		}
+		catch(BadCredentialsException e)
+		{
+			System.out.println("invalid details!!");
+			throw new Exception("Invalid username and password!");
+		}
 		
 	}
 

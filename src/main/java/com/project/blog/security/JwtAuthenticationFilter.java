@@ -39,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		// bearer 235hoa (token format)
 		
 		System.out.println(requestToken);
+		System.out.println("above is the token /n\n\n\n");
 		
 		String username = null;
 		
@@ -78,7 +79,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				
-				SecurityContextHolder.getContext().setAuthentication(null);
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 				
 			}else {
 				System.out.println("Invalid JWT token");
