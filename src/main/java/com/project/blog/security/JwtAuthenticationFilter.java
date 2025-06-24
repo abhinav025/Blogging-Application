@@ -39,7 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		// bearer 235hoa (token format)
 		
 		System.out.println(requestToken);
-		System.out.println("above is the token /n\n\n\n");
 		
 		String username = null;
 		
