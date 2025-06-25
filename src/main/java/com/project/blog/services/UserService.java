@@ -6,6 +6,8 @@ import com.project.blog.payloads.UserDto;
 
 public interface UserService {
 	
+	UserDto registerNewUser(UserDto user);
+	
 	
 //	we are going to use userdto to dirrectly expose to apis and will not expose entities it is only for backends
 	UserDto createUser(UserDto user);
