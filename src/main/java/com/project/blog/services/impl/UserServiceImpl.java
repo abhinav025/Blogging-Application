@@ -129,9 +129,9 @@ public class UserServiceImpl implements UserService {
 		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
 		
 		user.getRoles().add(role);
-		this.userRepo.save(user);
+		User newUser = this.userRepo.save(user);
 		
-		return null;
+		return this.modelMapper.map(newUser, UserDto.class);
 	}
 
 }
