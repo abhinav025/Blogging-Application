@@ -24,6 +24,12 @@ public class SwaggerConfig {
 //						.version("1.0.0")
 //						.description("Spring Boot blog application backend using Spring Boot"));
 //	}
+	
+	private List<SecurityContext> securityContexts() {
+		return Arrays.asList(SecurityContext.builder().securityReferences(sf()).build());
+	}	
+	
+	
 	public Docket api() {
 	    return new Docket(DocumentationType.SWAGGER_2)
 	            .apiInfo(getInfo())
